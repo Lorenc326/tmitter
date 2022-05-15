@@ -10,5 +10,5 @@ type Tweet struct {
 }
 
 func (tweet *Tweet) decode(row *sql.Row) error {
-	return row.Scan(&tweet.Id, &tweet.CreatedAt, &tweet.Username, &tweet.Text)
+	return row.Scan(&tweet.CreatedAt, &tweet.Username, &tweet.Text)
 }

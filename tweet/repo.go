@@ -12,6 +12,7 @@ type repo struct {
 func (r *repo) getById(id int) (Tweet, error) {
 	row := r.DB.QueryRow("SELECT createdAt, username, text FROM tweets WHERE id=?", id)
 	var res Tweet
+	res.Id = id
 	err := res.decode(row)
 	return res, err
 }

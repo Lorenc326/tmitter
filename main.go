@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/Lorenc326/tmitter/db"
+	"github.com/Lorenc326/tmitter/tweet"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"log"
@@ -36,9 +37,7 @@ func buildServer() *echo.Echo {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.GET("/", func(c echo.Context) error {
-		return nil
-	})
+	e.GET("/tweets/:id", tweet.GetTweet)
 
 	return e
 }
