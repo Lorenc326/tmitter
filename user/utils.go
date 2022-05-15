@@ -25,12 +25,10 @@ func exactlyTwice(users []user) bool {
 	if len(users) < 2 {
 		return false
 	}
-	temp := map[int]bool{}
+	ages := map[int]bool{}
 	for _, u := range users {
-		temp[u.age] = true
-	}
-	for age, _ := range temp {
-		if _, exist := temp[age*2]; exist {
+		ages[u.age] = true
+		if ages[u.age*2] || (u.age%2 == 0 && ages[u.age/2]) {
 			return true
 		}
 	}
@@ -41,15 +39,18 @@ func constrainedExactlyTwice(users []user) bool {
 	if len(users) < 2 {
 		return false
 	}
-	// as we have stale range 18-80 index is age-18
+	// as we have stale age range 18-80 index is age-18
 	ages := make([]bool, 63)
 	for _, u := range users {
+		// if big sample of same age users is expected
+		// consider skipping next ops for already checked
+		//
+		// if ages[u.age-18] {
+		//	 continue
+		// }
 		ages[u.age-18] = true
-	}
-	// makes sense to iterate until maxAge/2
-	// while counting - convert age back
-	for age, _ := range ages[:23] {
-		if ages[(age+18)*2] {
+		// we check if already exists minRangeAge * 2 or maxRangeAge / 2
+		if (u.age <= 40 && ages[(u.age*2)-18]) || (u.age >= 36 && u.age%2 == 0 && ages[(u.age/2)-18]) {
 			return true
 		}
 	}
