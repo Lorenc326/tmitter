@@ -38,6 +38,7 @@ func buildServer() *echo.Echo {
 	e.Use(middleware.Recover())
 
 	e.GET("/tweets/:id", tweet.GetTweet)
+	e.GET("/tweets", tweet.GetTweetsByUser)
 
 	return e
 }
